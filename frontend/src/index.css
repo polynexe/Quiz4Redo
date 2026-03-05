@@ -1,0 +1,95 @@
+/* importing google font */
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
+
+:root {
+  --primary-dark: #1a1a1a;
+  --light-text: #fff;
+  --navbar-light: #f8f9fa;
+  --secondary-color: #6c757d;
+  --border-radius-md: 30px;
+  --font-size-md: 1rem;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Flex', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+header{
+  background-color: var(--primary-dark);
+  color: var(--light-text);
+  padding: 0.5rem;
+}
+
+footer{
+  background-color: var(--primary-dark);
+  color: var(--light-text);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+header .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Target the navbar specifically */
+.navbar {
+  color: var(--navbar-light) !important;
+}
+
+.navbar .nav-link {
+  color: var(--navbar-light) !important;
+  margin-left: 1rem !important;
+}
+
+.navbar .navbar-brand {
+  color: var(--navbar-light) !important;
+}
+
+main{
+  min-height: 80vh;
+}
+
+h3{
+  padding: 1rem;
+}
+
+header .navbar-brand {
+  font-family: "Paytone One", cursive;
+  font-weight: 700;
+  font-size: 2rem;
+  align-items: center;
+  gap: 10px;
+}
+
+header .nav-toggle {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar .nav-link {
+  padding: 5px 10px;
+  color: var(--navbar-light);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-md);
+  transition: background-color 0.3s ease;
+  gap: 10px;
+}
+
+.navbar .nav-link:hover {
+  color: var(--navbar-light);
+  background: var(--secondary-color);
+}
+
+/* .hero-section{
+  background: var(--primary-dark);
+} */
+
