@@ -14,6 +14,7 @@ def getRoutes(request):
         '/api/projects/<id>/',
         '/api/projects/<id>/update/',
         '/api/projects/<id>/delete/',
+        '/api/projects/<id>/tasks/create/',
     ]
     return Response(routes)
 

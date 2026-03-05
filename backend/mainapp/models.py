@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -10,7 +11,7 @@ class Project(models.Model):
     ]
     
     _id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     project_name = models.CharField(max_length=100)
     project_description = models.TextField(null=True, blank=True, default='No description provided.')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
@@ -22,7 +23,7 @@ class Project(models.Model):
         return self.project_name
     
 class Task(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     task_name = models.CharField(max_length=100)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
     task_description = models.TextField(null=True, blank=True, default='No description provided.')

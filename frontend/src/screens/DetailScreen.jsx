@@ -4,6 +4,23 @@ import { Button, Col, ListGroup, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 function DetailScreen() {
+  const storedUser = localStorage.getItem('userInfo')
+  let isSuperuser = false
+
+  if (storedUser) {
+    try {
+      const parsedUser = JSON.parse(storedUser)
+      isSuperuser = Boolean(
+        parsedUser?.is_superuser ?? parsedUser?.isSuperuser ?? parsedUser?.superuser
+      )
+    } catch (error) {
+      isSuperuser = false
+    }
+  }
+
+  const project = {
+    
+  }
   return (
     <main>
       <section className="detail-hero-section text-center py-5 bg-light mb-5">
@@ -26,7 +43,7 @@ function DetailScreen() {
         </Row>
       </div>
       <div className="detail-content container">
-        <TaskCreateModal />
+        {isSuperuser && <TaskCreateModal />}
       </div>
     </main>
   )
