@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import DetailScreen from './screens/DetailScreen';
 import LoginScreen from './screens/LoginScreen';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Chatbox from './screens/Chatbox';
 
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/login' element={<LoginScreen />} />
         </Routes>
       </main>
+      <Chatbox />
       <Footer />
     </Router>
   );
