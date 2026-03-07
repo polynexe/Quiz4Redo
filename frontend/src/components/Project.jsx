@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Project({ project }) {
   return (
-    <Accordion className='mb-3' style={{ backgroundColor: '#f8f9fa', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+    <Accordion className='mb-3' style={{ filter: 'drop-shadow(0 0 20px rgba(96, 95, 96, 0.6))', backgroundColor: '#f8f9fa', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
       <Accordion.Item eventKey="0">
         <Accordion.Header>{project.project_name}</Accordion.Header>
         <Accordion.Body>

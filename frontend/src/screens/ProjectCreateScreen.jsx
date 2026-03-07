@@ -3,10 +3,13 @@ import {Form, Button} from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import TaskCreateModal from '../components/TaskCreateModal';
+import Success from '../components/Success';
 
 
 function ProjectCreateScreen() {
+    const navigate = useNavigate();
     const [project_name, setName] = useState('');
     const [project_description, setDescription] = useState('');
     const [status, setStatus] = useState('in_progress');
@@ -14,6 +17,7 @@ function ProjectCreateScreen() {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [user, setUser] = useState(1); // Default to user ID 1 for testing
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -28,15 +32,22 @@ function ProjectCreateScreen() {
                 user: user
                 });
             console.log('Project created:', response.data);
+            setShowSuccess(true);
             } catch (error) {
                 console.error('Error creating project:', error);
             }
         
     }
 
+    const handleCloseSuccess = () => {
+        setShowSuccess(false);
+        navigate('/');
+    }
+
 
 return (
 <div>
+<Success show={showSuccess} handleClose={handleCloseSuccess} />
 <FormContainer>
     <h1>Create Project</h1>
     <Form onSubmit={submitHandler}>

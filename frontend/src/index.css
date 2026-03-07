@@ -113,6 +113,7 @@ header .nav-toggle {
   bottom: 20px;
   right: 20px;
   z-index: 1000;
+  filter: drop-shadow(0 0 20px rgba(115, 0, 144, 0.6));
 }
 
 .chatbot-popup {

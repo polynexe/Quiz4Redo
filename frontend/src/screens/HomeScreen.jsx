@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap'
 import { useState } from 'react';
 import Project from '../components/Project';
 import axios from 'axios';
-
+// import Ballpit from '../components/Ballpit';
 
 function HomeScreen() {
   const [projects, setProjects] = useState([]);
@@ -21,12 +21,21 @@ function HomeScreen() {
 
   return (
     <main>
+      {/* <div style={{position: 'relative', overflow: 'hidden', minHeight: '500px', maxHeight: '500px', width: '100%'}}>
+        <Ballpit
+        count={100}
+        gravity={0.01}
+        friction={0.9975}
+        wallBounce={0.95}
+        followCursor={false}
+        />
+      </div> */}
         {/* Hero Section */}
         <section className="hero-section text-center py-5 bg-light mb-5">
             <div className="section-content">
 
                 <div className="hero-details">
-                    <h1 className="display-4">ClickUp, a project management app.</h1>
+                    <h1 className="display-4">ClickUp, a project management app</h1>
                     <p className="lead">Effortlessly organize your work and boost productivity.</p>
                     <p className="description">Welcome to ClickUp, where you can manage your projects and tasks with ease.</p>
                 </div>
