@@ -36,6 +36,16 @@ def createProject(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=201)
+
+    # Return a consistent field-level message when project_name violates uniqueness.
+    project_name_errors = serializer.errors.get('project_name', [])
+    for err in project_name_errors:
+        if getattr(err, 'code', '') == 'unique':
+            return Response(
+                {"project_name": ["Project name already exists. Please choose another name."]},
+                status=400,
+            )
+
     return Response(serializer.errors, status=400)
 
 @api_view(['POST'])

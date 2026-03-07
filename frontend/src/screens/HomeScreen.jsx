@@ -42,7 +42,7 @@ function HomeScreen() {
                 
             </div>
         </section>
-        <section className="features-section py-5 mb-5 bg-white text-dark text-center">
+        <section className="features-section py-5 mb-5 bg-white text-dark text-center container rounded">
             <div className="section-content">
                 <h2 className="text-center mb-4">Key Features</h2>
                 <div className="row">
@@ -68,7 +68,7 @@ function HomeScreen() {
             </div>
         </section>
         <section>
-            <div className="section-content text-center">
+            <div className="section-content text-center container rounded" style={{ backgroundColor: '#f8f9fa' }}>
               <h1>Latest Projects</h1>
               <p>Explore our latest projects and see how ClickUp can help you manage your work effectively.</p>
               <Row className='justify-content-md-center'>

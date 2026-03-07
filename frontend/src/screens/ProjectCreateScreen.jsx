@@ -1,10 +1,9 @@
 import React from 'react'
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Alert} from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import TaskCreateModal from '../components/TaskCreateModal';
 import Success from '../components/Success';
 
 
@@ -18,9 +17,11 @@ function ProjectCreateScreen() {
     const [end_date, setEndDate] = useState('');
     const [user, setUser] = useState(1); // Default to user ID 1 for testing
     const [showSuccess, setShowSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/projects/create/', {
                 project_name: project_name,
@@ -35,6 +36,14 @@ function ProjectCreateScreen() {
             setShowSuccess(true);
             } catch (error) {
                 console.error('Error creating project:', error);
+                const apiError = error.response?.data;
+                if (apiError?.project_name?.length) { // Check if project_name field has errors, and if so, display the first error message related to project_name
+                    setErrorMessage(apiError.project_name[0]);
+                } else if (apiError?.error) {
+                    setErrorMessage(apiError.error);
+                } else {
+                    setErrorMessage('Failed to create project. Please check your inputs.');
+                }
             }
         
     }
@@ -50,6 +59,7 @@ return (
 <Success show={showSuccess} handleClose={handleCloseSuccess} />
 <FormContainer>
     <h1>Create Project</h1>
+    {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
     <Form onSubmit={submitHandler}>
         <Form.Group controlId='user'>
             <Form.Label>User ID</Form.Label>
@@ -57,7 +67,16 @@ return (
         </Form.Group>
         <Form.Group controlId='project_name'>
             <Form.Label>Name</Form.Label>
-            <Form.Control type='name' placeholder='Enter name' value={project_name} onChange={(e) => setName(e.target.value)}></Form.Control>
+            <Form.Control
+                type='name'
+                placeholder='Enter name'
+                value={project_name}
+                onChange={(e) => {
+                    setName(e.target.value);
+                    if (errorMessage) setErrorMessage('');
+                }}
+                isInvalid={errorMessage.toLowerCase().includes('project name')}
+            ></Form.Control>
         </Form.Group>
         <Form.Group controlId='project_description'>
             <Form.Label>Description</Form.Label>

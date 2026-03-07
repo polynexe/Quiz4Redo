@@ -12,7 +12,7 @@ class Project(models.Model):
     
     _id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-    project_name = models.CharField(max_length=100)
+    project_name = models.CharField(max_length=100, unique=True)
     project_description = models.TextField(null=True, blank=True, default='No description provided.')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
     hours_spent = models.IntegerField(default=0)

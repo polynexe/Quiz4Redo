@@ -1,4 +1,17 @@
 from django.shortcuts import render
+from dotenv import load_dotenv
+from google import genai
+import os
+
+load_dotenv()  # Load environment variables from .env file
+
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+response = client.models.generate_content(
+    model="gemini-3-flash-preview", contents="Explain how AI works in a few words"
+)
+print(response.text)
 
 # Create your views here.
 from django.shortcuts import render
@@ -13,13 +26,15 @@ from google import genai
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 MODEL_NAME = "gemini-2.5-flash"
-SYSTEM_PROMPT = "You are a helpful assistant that provides concise and accurate answers to user questions. If you don't know the answer, say you don't know. Always be polite and respectful." \
-" Keep your responses under 100 words. Avoid unnecessary details and focus on directly answering the user's question." \
-" If the user asks for a joke, tell a short, clean joke. If the user asks for advice, provide practical and empathetic advice. Always maintain a friendly and helpful tone." \
-" If the user asks for a recommendation, provide a clear and concise recommendation based on the information they provide. Always strive to be as helpful as possible while keeping your responses brief and to the point." \
-" If the user asks for a definition, provide a clear and concise definition of the term they ask about. Always aim to provide accurate and helpful information while keeping your responses brief and easy to understand." \
-" If the user asks for a summary, provide a brief and concise summary of the information they ask about. Always focus on providing the most important and relevant information while keeping your responses brief and easy to understand." \
-" If the user asks for a translation, provide a clear and concise translation of the text they ask about. Always strive to provide an accurate and helpful translation while keeping your responses brief and easy to understand." \
+SYSTEM_PROMPT = "You are a helpful assistant for a Project Management Application built with Django REST Framework and React. " \
+"Your role is to help users understand and use the application's features. " \
+"The application allows users to: " \
+"1) Manage Projects - create, view, and manage projects with status tracking (In Progress, Completed), monitor hours spent, set start/end dates, and add descriptions. " \
+"2) Manage Tasks - create tasks associated with projects, add descriptions, set start/end dates, and track tasks by user. " \
+"The application uses Django 6.0.3 backend with Django REST Framework for APIs, SQLite database, and a React 19.2.4 frontend with Redux for state management and React Bootstrap for UI. " \
+"When users ask about features, provide clear, concise guidance on how to use the project and task management features. " \
+"Keep responses under 100 words, be polite and helpful. If asked about technical details, reference the tech stack appropriately. " \
+"If you don't know something specific about this application, acknowledge it politely and offer general project management guidance instead."
 
 @csrf_exempt
 @require_http_methods(["POST"])

@@ -1,10 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ChatbotIcon from '../components/ChatbotIcon'
 import ChatForm from '../components/ChatForm'
-import UserIcon from '../components/UserIcon'
+import ChatMessage from '../components/ChatMessage'
+
 
 function Chatbox() {
   const [isOpen, setIsOpen] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
+  const chatBodyRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen || !chatBodyRef.current) return;
+    chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+  }, [chatHistory, isOpen]);
+
+  const generateBotResponse = async (history) => {
+    console.log('Generating bot response for history:', history);
+    const userMessage = history[history.length - 1].text;
+    history = history.map(({role, text}) => ({role, parts: [{text}]}));
+    
+    // Replace the temporary thinking message with the final bot response.
+    const updateHistory = (text) => {
+      setChatHistory(prev => [...prev.filter(msg => msg.text !== "Thinking..."), {role: "model", text}]);
+    }
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage })
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/chat/', requestOptions);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error.message || 'Failed to generate bot response');
+      console.log('Bot response data:', data);
+      const apiResponseText = (data.reply || '').replace(/\n/g, '<br />').trim();
+      updateHistory(apiResponseText);
+    } catch (error) {
+      console.error('Error generating bot response:', error);
+    }
+  };
 
   return (
     <div className='chatbot-container'>
@@ -15,25 +51,31 @@ function Chatbox() {
               <ChatbotIcon />
               <h2 className='logo-text'>Chatbot</h2>
             </div>
-            <button className='material-symbols-outlined close-btn' onClick={() => setIsOpen(false)}>keyboard_arrow_down</button>
+            <button
+              type='button'
+              className='close-btn material-symbols-outlined'
+              onClick={() => setIsOpen(false)}
+              aria-label='Close chat'
+              title='Close chat'
+            >
+              keyboard_arrow_down
+            </button>
           </div>
 
-          <div className='chatbot-body'>
+          <div className='chat-body' ref={chatBodyRef}>
             <div className='message bot-message'>
               <ChatbotIcon />
               <p className='message-text'>Hello! How can I assist you today?</p>
             </div>
+
+            {chatHistory.map((chat, index) => (
+              <ChatMessage key={index} chat={chat} />
+            ))}
           </div>
 
-        <div className='usermessage-body'>
-          <div className='message user-message'>
-            <p className='message-text'>Lorem Ipsum</p>
-            <UserIcon />
-          </div>
-        </div>
-
+        {/* Render the chat history dynamixally */}
           <div className="chat-footer">
-            <ChatForm />
+            <ChatForm chatHistory={chatHistory}  setChatHistory={setChatHistory} generateBotResponse={generateBotResponse} />
           </div>
         </div>
       ) : (
