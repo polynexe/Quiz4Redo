@@ -35,7 +35,7 @@ function Chatbox() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error.message || 'Failed to generate bot response');
       console.log('Bot response data:', data);
-      const apiResponseText = (data.reply || '').replace(/\n/g, '<br />').trim();
+      const apiResponseText = (data.reply || '').trim();
       updateHistory(apiResponseText);
     } catch (error) {
       console.error('Error generating bot response:', error);
