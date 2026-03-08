@@ -49,7 +49,7 @@ function Chatbox() {
           <div className='chatbot-header'>
             <div className='header-info'>
               <ChatbotIcon />
-              <h2 className='logo-text'>Chatbot</h2>
+              <h2 className='logo-text'>Cutie</h2>
             </div>
             <button
               type='button'
